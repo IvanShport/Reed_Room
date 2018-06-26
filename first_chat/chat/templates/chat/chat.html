@@ -1,0 +1,182 @@
+{% extends "base/base.html" %}
+{% block content %}
+{% load staticfiles %}
+
+
+<div class="row content">
+
+    {% if open_chat %}
+    <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Введите username пользователя, которого хотите дабавить</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method = "post" action = "{% url 'chat:open_chat' open_chat.id%}">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <input type="text" class="form-control" placeholder="Пользовательское имя" name="username" value="">
+                        <!--<input type="hidden" name="chat" value="{{ open_chat.id }}"/>-->
+                        <div>
+                            {{ form.username.errors }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="col-lg-2 col-md-4 chat-column">
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0 text-center">
+                        <button class="btn btn-link my-2 font-weight-bold" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h4>Создать чат</h4>
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <form method = "post" action = "{% url 'chat:create_chat' %}" class="create-chat">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="formGroupExampleInput"><small>Название</small></label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" name="name" value="">
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile"><small>Выберите аватарку</small></label>
+                            </div>
+                            <button class="btn btn-lg btn-link btn-block" type="submit">Создать</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-rooms">
+                {% for invite in invites %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" width="40" height="40" class="rounded-circle">
+                            <a class="btn btn-link" href="{% url 'chat:join' invite.chat.id %}" role="button">
+                                <span class="ml-2">Войти в {{ invite.chat.name }}</span>
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+                {% endfor %}
+                {% for chat in chats %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" width="40" height="40" class="rounded-circle">
+                            <a class="btn btn-link" href="{% url 'chat:open_chat' chat.id %}" role="button">
+                                <span class="ml-2">{{ chat.name }}</span>
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9 col-md-6 center-block">
+        {% if open_chat %}
+        <div class="header-for-chat">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="navbar-brand" href="#">
+                    <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" width="30" height="30" class="d-inline-block rounded-circle align-top mr-1" alt="">
+                    {{ open_chat.name }}
+                    <span class="ml-4 text-muted font-weight-bold count-of-user">
+                        {{ open_chat.users.count }}
+                        <i class="fa fa-user-friends" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class = "navbar-right-space-chat" >
+                    <div class="dropdown">
+                        <a id="navbarDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v settings-chat" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inviteModal">Пригласить</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Выйти</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div data-spy="scroll" data-target="#navbar-example" data-offset="0" class="scrollspy-example">
+            {% for message in open_chat.message_set.all %}
+            {% if message.author.user == request.user %}
+            <div class="mt-2 my-message-block">
+                <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" class="rounded-circle ava-in-message m-2">
+                <div id="item-1-1" class="shadow p-3 bg-white rounded my-message">
+                    {{ message.text }}<br/>
+                    <small class="text-muted float-right">19:00</small>
+                </div>
+            </div>
+            {% else %}
+            <div class="mt-2 other-message-block">
+                <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" class="rounded-circle ava-in-message m-2">
+                <div id="item-1" class="shadow p-3 bg-white rounded other-message">
+                    {{ message.text }}<br/>
+                    <small class="text-muted float-left">19:00</small>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="send-message">
+            <form method = "post" action = "{% url 'chat:send' open_chat.id %}">
+                {% csrf_token %}
+                <div class="input-group ">
+                    <textarea class="form-control rounded" placeholder="Введите текст сообщения ..." name="text" value="" aria-label="With textarea"></textarea>
+                    <div class="input-group-append">
+                        <button class="btn btn-link mx-3" type="submit">Отправить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+
+    <nav id="navbar-example" class="col-lg-1 col-md-2">
+        <nav class="nav-pills flex-column">
+            <a class="nav-link" href="#item-1">Пункт 1</a>
+            <nav class="nav nav-pills flex-column">
+                <a class="nav-link ml-3 my-1" href="#item-1-1">Пункт 1-1</a>
+                <a class="nav-link ml-3 my-1" href="#item-1-2">Пункт 1-2</a>
+            </nav>
+            <a class="nav-link" href="#item-2">Item2</a>
+            <a class="nav-link" href="#item-3">Item3</a>
+            <nav class="nav nav-pills flex-column">
+                <a class="nav-link ml-3 my-1" href="#item-3-1">Пункт 3-1</a>
+                <a class="nav-link ml-3 my-1" href="#item-3-2">Пункт 3-2</a>
+            </nav>
+            <a class="nav-link" href="#item-4">Пункт 1</a>
+            <a class="nav-link" href="#item-5">Пункт 1</a>
+            <a class="nav-link" href="#item-6">Пункт 1</a>
+            <a class="nav-link" href="#item-7">Пункт 1</a>
+            <a class="nav-link" href="#item-8">Пункт 1</a>
+            <a class="nav-link" href="#item-9">Пункт 1</a>
+        </nav>
+    </nav>
+
+</div>
+
+
+
+{% endblock %}

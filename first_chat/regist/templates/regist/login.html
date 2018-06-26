@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<div class="text-center body">
+    <form method="post" action="{% url 'login:login' %}" class="form-signin">
+        {% csrf_token %}
+        <h3 class="mb-3 font-weight-normal">Авторизация</h3>
+        {% for field in form %}
+            <label for="{{ field.id_for_label }}" class="sr-only">{{ field.label }}</label>
+            <!--<input class="form-control" id="{{ field.id_for_label }}" name = "{{ field.html_name }}" value="{{ field.value|default_if_none:"" }}">-->
+            {{ field.as_widget }}
+            <div class="">
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <!--<label for="inputLogin" class="sr-only">Логин</label>-->
+        <!--<input type="text" id="inputLogin" class="form-control" placeholder="Логин" required autofocus>-->
+        <!--<label for="inputPassword" class="sr-only">Пароль</label>-->
+        <!--<input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>-->
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Запомнить меня
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+    </form>
+</div>
+
+{% endblock %}

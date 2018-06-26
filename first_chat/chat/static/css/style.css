@@ -1,0 +1,181 @@
+.header {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    background-clip: padding-box;
+}
+
+.scrollspy-example {
+    height: 86.8%;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.content {
+    padding-top: 56px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.chat-column {
+    padding: 0px;
+    border-right: 1px solid rgba(0,0,0,.125);
+    background-clip: padding-box;
+}
+
+.send-message form {
+    margin: 0;
+}
+
+.modal-content form {
+    margin: 0;
+}
+
+.chat-rooms {
+    height: 71.2%;
+    overflow: auto;
+}
+
+.create-chat {
+    margin: 0;
+}
+
+.card-header .btn {
+    padding: 0;
+}
+
+.accordion .card-header {
+    padding: .45rem .60rem;
+}
+
+.my-message {
+    display: inline;
+    max-width: 60%;
+}
+
+.my-message-block {
+    flex: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.send-message {
+    /*height: 6.5%;*/
+    border-top: 1px solid rgba(0,0,0,.125);
+    background-clip: padding-box;
+}
+
+.center-block {
+    height: 100%;
+    padding: 0;
+}
+
+.header-for-chat {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    background-clip: padding-box;
+}
+
+.count-of-user {
+    font-size: 11pt;
+}
+
+.other-message-block {
+    flex: none;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.other-message {
+    display: inline;
+    max-width: 60%;
+}
+
+.ava-in-message {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar-right-space {
+    justify-content: flex-end;
+}
+
+.navbar-right-space-chat {
+    display: flex;
+    padding: 0px 20px;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.settings-chat {
+    border: 10px solid rgba(0,0,0,0);
+    font-size: 14pt;
+}
+
+/*---------------------------------------------------Для вертикального выравнивания----------------------------------*/
+
+.navbar-name:before {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    content: "";
+}
+
+.navbar-name span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------*/
+
+.navbar-right-space .nav-link {
+    padding: 0;
+}
+
+#navbar-example {
+    height: 100%;
+    overflow: auto;
+    border-left: 1px solid rgba(0,0,0,.125);
+    background-clip: padding-box;
+}
+
+.body {
+    height: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.body .container {
+    max-width: 960px;
+}
+
