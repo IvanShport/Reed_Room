@@ -8,6 +8,7 @@ from django.contrib.auth import password_validation
 from regist.models import Profile
 
 class RegForm(UserCreationForm):
+    avatar = forms.ImageField(label='Аватарка', widget=forms.FileInput, required=False)
 
     class Meta:
         model = User
@@ -17,10 +18,17 @@ class RegForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegForm, self).__init__(*args, **kwargs)
         for name, field in self.fields.items():
-            if 'class' in field.widget.attrs:
-                field.widget.attrs['class'] += ' form-control'
+            if field.widget.__class__ == forms.widgets.FileInput:
+                if 'class' in field.widget.attrs:
+                    field.widget.attrs['class'] += ' form-control-file'
+                else:
+                    field.widget.attrs.update({'class': 'form-control-file'})
             else:
-                field.widget.attrs.update({'class': 'form-control'})
+                if 'class' in field.widget.attrs:
+                    field.widget.attrs['class'] += ' form-control'
+                else:
+                    field.widget.attrs.update({'class': 'form-control'})
+
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -48,6 +56,7 @@ class RegForm(UserCreationForm):
 
         profile = Profile()
         profile.user = user
+        profile.avatar = self.cleaned_data['avatar']
         profile.save()
 
         return profile

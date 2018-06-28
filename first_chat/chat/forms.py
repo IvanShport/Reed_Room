@@ -4,26 +4,10 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from chat.models import Chat, Invite
 from regist.models import Profile
-#
-# class ChatRoomForm(forms.Form):
-#
-#     name = forms.CharField(max_length=64)
-#
-#     def save(self, request):
-#         chat = Chat()
-#         chat.name = self.cleaned_data['name']
-#         chat.admin = get_object_or_404(Profile, user=request.user)
-#         chat.save()
-#
-#         chat.users.add(get_object_or_404(Profile, user=request.user))
-#         chat.save()
-#
-#         return chat
 
 class InvateForm(forms.Form):
 
     username = forms.CharField(max_length=150)
-    # chat = forms.CharField(max_length=8)
 
     def clean_username(self):
         username = self.cleaned_data['username']

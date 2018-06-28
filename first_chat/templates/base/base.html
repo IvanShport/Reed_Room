@@ -22,7 +22,11 @@
             <div class="navbar-nav mr-4">
                 <div class="nav-item dropdown">
                     <a class=" nav-link font-weight-bold dropdown-toggle navbar-name" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" width="30" height="30" class = " rounded-circle">
+                        {% if request.user.profile.avatar %}
+                            <img src="{{ request.user.profile.avatar.url }}" width="30" height="30" class = " rounded-circle">
+                        {% else %}
+                            <img src="{% static 'img/default.png' %}" width="30" height="30" class = " rounded-circle">
+                        {% endif %}
                         <span class="ml-2">{{request.user.first_name}} {{request.user.last_name}}</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">

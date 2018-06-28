@@ -6,9 +6,7 @@ class Chat(models.Model):
     admin = models.ForeignKey(Profile, related_name='admin', on_delete=models.SET_NULL, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=64)
-    # image = models.ImageField(upload_to='image/%Y/%m/%d',
-    #                            default=os.path.join(settings.MEDIA_ROOT, 'image/2018/01/23/user.png'), blank=True,
-    #                            null=True)
+    image = models.ImageField(upload_to='image/%Y/%m/%d', default='/img/user-png-icon-male-user-icon-512.png', blank=True, null=True)
 
     def __str__(self):
         return self.name

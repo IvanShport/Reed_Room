@@ -11,9 +11,7 @@ class Profile(models.Model):
     activation_key = models.CharField(max_length=255, default=1)
     email_validated = models.BooleanField(default=False)
 
-    # avatar = models.ImageField(upload_to='image/%Y/%m/%d',
-    #                            default=os.path.join(settings.MEDIA_ROOT, 'image/2018/01/23/user.png'), blank=True,
-    #                            null=True)
+    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='/img/user-png-icon-male-user-icon-512.png', blank=True, null=True)
 
     def __str__(self):
         return self.user.username

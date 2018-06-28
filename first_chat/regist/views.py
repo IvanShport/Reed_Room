@@ -30,7 +30,7 @@ def LoginView(request):
 
 def RegistView(request):
     if request.method == 'POST':
-        form = RegForm(request.POST)
+        form = RegForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
 

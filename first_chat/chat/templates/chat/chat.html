@@ -47,14 +47,14 @@
 
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        <form method = "post" action = "{% url 'chat:create_chat' %}" class="create-chat">
+                        <form method = "post" action = "{% url 'chat:create_chat' %}" enctype="multipart/form-data" class="create-chat">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="formGroupExampleInput"><small>Название</small></label>
                                 <input type="text" class="form-control" id="formGroupExampleInput" name="name" value="">
                             </div>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile">
+                                <input type="file" class="custom-file-input" name="image" id="customFile">
                                 <label class="custom-file-label" for="customFile"><small>Выберите аватарку</small></label>
                             </div>
                             <button class="btn btn-lg btn-link btn-block" type="submit">Создать</button>
@@ -67,7 +67,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">
-                            <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" width="40" height="40" class="rounded-circle">
+                            {% if invite.chat.image %}
+                            <img src="{{ invite.chat.image.url }}" width="40" height="40" class="rounded-circle">
+                            {% else %}
+                            <img src="{% static 'img/default.png' %}" width="40" height="40" class="rounded-circle">
+                            {% endif %}
                             <a class="btn btn-link" href="{% url 'chat:join' invite.chat.id %}" role="button">
                                 <span class="ml-2">Войти в {{ invite.chat.name }}</span>
                             </a>
@@ -79,7 +83,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">
-                            <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" width="40" height="40" class="rounded-circle">
+                            {% if chat.image %}
+                            <img src="{{ chat.image.url }}" width="40" height="40" class="rounded-circle">
+                            {% else %}
+                            <img src="{% static 'img/default.png' %}" width="40" height="40" class="rounded-circle">
+                            {% endif %}
                             <a class="btn btn-link" href="{% url 'chat:open_chat' chat.id %}" role="button">
                                 <span class="ml-2">{{ chat.name }}</span>
                             </a>
@@ -96,7 +104,11 @@
         <div class="header-for-chat">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="navbar-brand" href="#">
-                    <img src="{% static 'img/2W1pmfAWnI0.jpg' %}" width="30" height="30" class="d-inline-block rounded-circle align-top mr-1" alt="">
+                    {% if open_chat.image %}
+                    <img src="{{ open_chat.image.url }}" width="30" height="30" class="d-inline-block rounded-circle align-top mr-1">
+                    {% else %}
+                    <img src="{% static 'img/default.png' %}" width="30" height="30" class="d-inline-block rounded-circle align-top mr-1">
+                    {% endif %}
                     {{ open_chat.name }}
                     <span class="ml-4 text-muted font-weight-bold count-of-user">
                         {{ open_chat.users.count }}

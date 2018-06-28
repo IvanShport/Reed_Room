@@ -71,6 +71,7 @@ def CreateChatView(request):
         chat = Chat()
         chat.admin = get_object_or_404(Profile, user=request.user)
         chat.name = name
+        chat.image = request.FILES.get('image')
         chat.save()
 
         chat.users.add(get_object_or_404(Profile, user=request.user))
